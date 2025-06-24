@@ -2,14 +2,16 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
-function convertFile(inputPath, outputPath, quality) {
+function convertFile(inputPath, outputPath, quality, format) {
+  const extension = '.' + format;
 
-  const outputFile = outputPath || inputPath.replace(path.extname(inputPath), '.webp');
-  
-  sharp(inputPath)
-    .webp({ quality })
-    .toFile(outputFile)
-    .then(() => {
+  const outputFile = outputPath || inputPath.replace(path.extname(inputPath), extension);
+
+  let option = format === 'png' ? { compressionLevel: 9 } : { quality };
+
+  sharp(inputPath).
+    toFormat(format, option)
+    .toFile(outputFile).then(() => {
       console.log(`✅ Converted to: ${outputFile}`);
     })
     .catch(err => {

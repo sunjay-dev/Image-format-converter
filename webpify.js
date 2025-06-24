@@ -2,23 +2,9 @@
 const convertFile = require('./convert.js');
 const fs = require('fs');
 const path = require('path');
+const processArgs = require('./args.js');
 
-const args = process.argv.slice(2);
-const isAll = args.includes('-all');
-
-let quality = 80;
-let qualityArg = args.find(arg => arg.startsWith('-quality'));
-
-if(qualityArg){
-  const qualityValue = parseInt(qualityArg.split('=')[1]);
-  if (!isNaN(qualityValue) && qualityValue >= 0 && qualityValue <= 100) {
-    quality = qualityValue;
-  }
-  else {
-    console.error("❌ Invalid quality value. Use 0–100.");
-    process.exit(1);
-  }
-}
+let { inputPath, outputPath, format, quality, isAll }= processArgs(process.argv)
 
 const supportedExtensions = ['.jpg', '.png', '.jpeg'];
 
@@ -34,13 +20,11 @@ if (isAll) {
     process.exit(0);
   }
   imageFiles.forEach(file => {
-    convertFile(file, null,quality);
+    convertFile(file, null,quality, format);
   });
 }
 else {
-  const inputPath = args[0];
-  const outputPath = args[1];
-  if (!inputPath || inputPath.startsWith('-')) {
+  if (!inputPath) {
     console.error("❌ Please provide an input image path.");
     console.error("Usage:");
     console.error("  webpify input.jpg [output.webp]");
@@ -48,5 +32,5 @@ else {
     process.exit(1);
   }
 
-  convertFile(inputPath, outputPath, quality);
+  convertFile(inputPath, outputPath, quality, format);
 }
