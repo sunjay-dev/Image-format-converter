@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const processArgs = require('./args.js');
 
-let { inputPath, outputPath, format, quality, isAll }= processArgs(process.argv)
+let { inputPath, outputPath, format, quality, isAll, del }= processArgs(process.argv)
 
 const supportedExtensions = ['.jpg', '.png', '.jpeg'];
 
@@ -20,7 +20,7 @@ if (isAll) {
     process.exit(0);
   }
   imageFiles.forEach(file => {
-    convertFile(file, null,quality, format);
+    convertFile(file, null,quality, format, del);
   });
 }
 else {
@@ -32,5 +32,5 @@ else {
     process.exit(1);
   }
 
-  convertFile(inputPath, outputPath, quality, format);
+  convertFile(inputPath, outputPath, quality, format, del);
 }

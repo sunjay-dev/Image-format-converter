@@ -4,6 +4,7 @@ function processArgs() {
     const isAll = args.includes('-all');
     let quality = 80;
     let format = 'webp';
+    let del = args.includes('-del') || false;
 
 
     let qualityArg = args.find(arg => arg.startsWith('-quality'));
@@ -41,7 +42,7 @@ function processArgs() {
     const inputPath = positional[0];
     const outputPath = positional[1];
 
-    return { inputPath, outputPath, format, quality, isAll }
+    return { inputPath, outputPath, format, quality, isAll, del }
 }
 
 module.exports = processArgs;
