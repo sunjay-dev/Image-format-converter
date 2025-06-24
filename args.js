@@ -5,6 +5,26 @@ function processArgs() {
     let quality = 80;
     let format = 'webp';
     let del = args.includes('-del') || false;
+    let supportedExtensions = ['.jpg', '.png', '.jpeg'];
+
+    if (args.includes('-help') || args.includes('--help')) {
+        showHelp();
+        process.exit(0);
+    }
+
+    let supportedExtArg = args.find(arg => arg.startsWith('-ext'));
+    if (supportedExtArg) {
+        const supportedExtValue = supportedExtArg.split('=')[1];
+        const validExts = ['jpg', 'jpeg', 'png', 'webp'];
+
+        if (validExts.includes(supportedExtValue)) {
+            supportedExtensions = ['.' + supportedExtValue]
+        }
+        else {
+            console.error(`[ERROR] Invalid extension. Use: ${validExts.join(', ')}`);
+            process.exit(1);
+        }
+    }
 
 
     let qualityArg = args.find(arg => arg.startsWith('-quality'));
@@ -14,7 +34,7 @@ function processArgs() {
             quality = qualityValue;
         }
         else {
-            console.error("❌ Invalid quality value. Use 0–100.");
+            console.error("[ERROR] Invalid quality value. Use 0–100.");
             process.exit(1);
         }
     }
@@ -29,11 +49,11 @@ function processArgs() {
             format = formatValue;
         }
         else if (formatValue === 'jpg') {
-            console.error('❌ Sorry JPG not supported. Try JPEG instead.');
+            console.error('[ERROR] Sorry JPG not supported. Try JPEG instead.');
             process.exit(1);
         }
         else {
-            console.error(`❌ Invalid format. Choose from: ${validFormats.join(', ')}`);
+            console.error(`[ERROR] Invalid format. Choose from: ${validFormats.join(', ')}`);
             process.exit(1);
         }
     }
@@ -42,7 +62,30 @@ function processArgs() {
     const inputPath = positional[0];
     const outputPath = positional[1];
 
-    return { inputPath, outputPath, format, quality, isAll, del }
+    return { inputPath, outputPath, format, quality, isAll, del, supportedExtensions }
 }
+
+
+
+const showHelp = () => {
+    console.log(`
+[INFO] Imgify - Image Converter CLI
+
+Usage:
+  imgify input.jpg [output.webp]
+  imgify -all [-format=webp] [-quality=80]
+  imgify -help
+
+Options:
+  -all             Convert all .jpg/.jpeg/.png in the current folder
+  -quality=80      Set output quality (0–100). Default: 80
+  -format=webp     Output format (webp, jpeg, png, avif, tiff, heif)
+  -help, --help    Show this help message
+
+Examples:
+  imgify photo.jpg output.webp
+  imgify -all -quality=70 -format=jpeg
+`);
+};
 
 module.exports = processArgs;

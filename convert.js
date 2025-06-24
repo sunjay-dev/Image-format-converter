@@ -12,19 +12,19 @@ function convertFile(inputPath, outputPath, quality, format, del = false) {
   sharp(inputPath).
     toFormat(format, option)
     .toFile(outputFile).then(() => {
-      console.log(`✅ Converted: ${inputPath}`);
+      console.log(`[OK] Converted: ${inputPath}`);
       if (del) {
         fs.unlink(inputPath, (err) => {
           if (err) {
-            console.error(`⚠️ Failed to delete original file: ${inputPath}`, err.message);
+            console.error(`[ERROR] Failed to delete original file: ${inputPath}`, err.message);
           } else {
-            console.log(`🗑️ Deleted original file: ${inputPath}`);
+            console.log(`[DELETE] Deleted original file: ${inputPath}`);
           }
         })
       }
     })
     .catch(err => {
-      console.error("❌ Conversion failed:", err.message);
+      console.error("[ERROR] Conversion failed:", err.message);
     });
 }
 

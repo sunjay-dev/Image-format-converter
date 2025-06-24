@@ -4,9 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const processArgs = require('./args.js');
 
-let { inputPath, outputPath, format, quality, isAll, del }= processArgs(process.argv)
-
-const supportedExtensions = ['.jpg', '.png', '.jpeg'];
+let { inputPath, outputPath, format, quality, isAll, del, supportedExtensions }= processArgs(process.argv)
 
 if (isAll) {
   const files = fs.readdirSync(process.cwd());
@@ -16,7 +14,7 @@ if (isAll) {
   );
 
   if (imageFiles.length === 0) {
-    console.log("ℹ️ No images found in this folder.");
+    console.log("[INFO] No images found in this folder.");
     process.exit(0);
   }
   imageFiles.forEach(file => {
@@ -25,7 +23,7 @@ if (isAll) {
 }
 else {
   if (!inputPath) {
-    console.error("❌ Please provide an input image path.");
+    console.error("[ERROR] Please provide an input image path.");
     console.error("Usage:");
     console.error("  webpify input.jpg [output.webp]");
     console.error("  webpify --all   # Convert all .jpg/.png/.jpeg images in this folder");

@@ -2,12 +2,12 @@
   "name": "webp-converter",
   "version": "1.0.0",
   "description": "",
-  "main": "webpify.js",
+  "main": "imgify.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-     "webpify": "./webpify.js"
+     "imgify": "./imgify.js"
   },
   "keywords": [],
   "author": "",
