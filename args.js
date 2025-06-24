@@ -80,6 +80,7 @@ Options:
   -all             Convert all .jpg/.jpeg/.png in the current folder
   -quality=80      Set output quality (0–100). Default: 80
   -format=webp     Output format (webp, jpeg, png, avif, tiff, heif)
+  -ext=png         Convert only png files to desired format 
   -help, --help    Show this help message
 
 Examples:
