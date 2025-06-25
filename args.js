@@ -6,8 +6,8 @@ function processArgs() {
     const isAll = args.includes('-all');
     let quality = 80;
     let format = 'webp';
-    let del = args.includes('-del') || false;
-    let supportedExtensions = ['.jpg', '.png', '.jpeg'];
+    let del = args.includes('-del') || args.includes('--delete');
+    let supportedExtensions = ['.jpg', '.png', '.jpeg', '.avif', '.tiff', '.heif'];
 
     if (args.includes('-help') || args.includes('--help')) {
         showHelp();
@@ -49,6 +49,11 @@ function processArgs() {
 
         if (validFormats.includes(formatValue)) {
             format = formatValue;
+            
+            if(formatValue !== 'webp' && !supportedExtensions.includes('.webp')){
+                supportedExtensions.push('.webp');
+                supportedExtensions = supportedExtensions.filter(ext => ext !== `.${formatValue}`);
+            }
         }
         else if (formatValue === 'jpg') {
             logger.error('Sorry JPG not supported. Try JPEG instead.');
