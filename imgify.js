@@ -3,8 +3,10 @@ const convertFile = require('./convert.js');
 const fs = require('fs');
 const path = require('path');
 const processArgs = require('./args.js');
-const logger = require('./logger.js')
+const logger = require('./logger.js');
+const deleteFile = require('./delete.js');
 
+const filesToDelete = [];
 
 async function start() {
   let { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, dry } = processArgs(process.argv)
@@ -21,13 +23,13 @@ async function start() {
       process.exit(0);
     }
     for (const file of imageFiles) {
-      if (dry) {
+      if (dry)
         logger.log(`[DRY] ${file} → ${format}`);
-      } else
-        await convertFile(file, null, quality, format, del);
+      else {
+        const success = await convertFile(file, null, quality, format);
+        if (success) filesToDelete.push(file);
+      }
     }
-    console.log(`\n\nLogs are saved at ${logger.path}`);
-    logger.space();
   }
   else {
     if (!inputPath) {
@@ -38,10 +40,18 @@ async function start() {
       process.exit(1);
     }
 
-    if (dry) {
+    if (dry)
       logger.log(`[DRY] ${file} → ${format}`);
-    } else
-      await convertFile(inputPath, outputPath, quality, format, del);
+    else {
+      const success = await convertFile(inputPath, outputPath, quality, format);
+      if (success) filesToDelete.push(inputPath);
+    }
   }
+  if (del) {
+    for (const file of filesToDelete)
+      deleteFile(file);
+  }
+  console.log(`\n\nLogs are saved at ${logger.path}`);
+  logger.space();
 }
 start();
