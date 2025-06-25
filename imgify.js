@@ -5,37 +5,43 @@ const path = require('path');
 const processArgs = require('./args.js');
 const logger = require('./logger.js')
 
-let { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, dry } = processArgs(process.argv)
 
-if (isAll) {
-  const files = fs.readdirSync(process.cwd());
+async function start() {
+  let { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, dry } = processArgs(process.argv)
 
-  const imageFiles = files.filter(file =>
-    supportedExtensions.includes(path.extname(file).toLowerCase())
-  );
+  if (isAll) {
+    const files = fs.readdirSync(process.cwd());
 
-  if (imageFiles.length === 0) {
-    logger.info("No images found in this folder.");
-    process.exit(0);
+    const imageFiles = files.filter(file =>
+      supportedExtensions.includes(path.extname(file).toLowerCase())
+    );
+
+    if (imageFiles.length === 0) {
+      logger.info("No images found in this folder.");
+      process.exit(0);
+    }
+    for (const file of imageFiles) {
+      if (dry) {
+        logger.log(`[DRY] ${file} → ${format}`);
+      } else
+        await convertFile(file, null, quality, format, del);
+    }
+    console.log(`\n\nLogs are saved at ${logger.path}`);
+    logger.space();
   }
-  imageFiles.forEach(file => {
+  else {
+    if (!inputPath) {
+      logger.error("Please provide an input image path.");
+      logger.error("Usage:");
+      logger.error("  webpify input.jpg [output.webp]");
+      logger.error("  webpify --all   # Convert all .jpg/.png/.jpeg images in this folder");
+      process.exit(1);
+    }
+
     if (dry) {
       logger.log(`[DRY] ${file} → ${format}`);
     } else
-      convertFile(file, null, quality, format, del);
-  });
-}
-else {
-  if (!inputPath) {
-    logger.error("Please provide an input image path.");
-    logger.error("Usage:");
-    logger.error("  webpify input.jpg [output.webp]");
-    logger.error("  webpify --all   # Convert all .jpg/.png/.jpeg images in this folder");
-    process.exit(1);
+      await convertFile(inputPath, outputPath, quality, format, del);
   }
-
-  if (dry) {
-    logger.log(`[DRY] ${file} → ${format}`);
-  } else
-    convertFile(inputPath, outputPath, quality, format, del);
 }
+start();

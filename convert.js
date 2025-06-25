@@ -7,7 +7,7 @@ function formatSize(bytes) {
   return `${(bytes / 1024 / 1024).toFixed(3)} MB`;
 }
 
-function convertFile(inputPath, outputPath, quality, format, del = false) {
+async function convertFile(inputPath, outputPath, quality, format, del = false) {
   const extension = '.' + format;
   
   const originalSize = fs.statSync(inputPath).size;
@@ -16,13 +16,13 @@ function convertFile(inputPath, outputPath, quality, format, del = false) {
 
   let option = format === 'png' ? { compressionLevel: 9 } : { quality };
 
-  sharp(inputPath).
+  await sharp(inputPath).
     toFormat(format, option)
     .toFile(outputFile).then(() => {
       const newSize = fs.statSync(outputFile).size;
       logger.log(`Converted: ${inputPath} (${formatSize(originalSize)} → ${formatSize(newSize)})`);
       if (del) {
-        fs.unlink(inputPath, (err) => {
+        fs.unlinkSync(inputPath, (err) => {
           if (err) {
             logger.error(`Failed to delete original file: ${inputPath}`, err.message);
           } else {
