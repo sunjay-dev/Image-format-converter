@@ -1,10 +1,10 @@
 {
-  "name": "webp-converter",
+  "name": "image-format-converter",
   "version": "1.0.0",
-  "description": "",
+  "description": "A CLI tool to convert images formats with features like quality control, batch mode, and more.",
   "main": "imgify.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node imgify.js"
   },
   "bin": {
      "imgify": "./imgify.js"

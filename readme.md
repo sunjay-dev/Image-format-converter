@@ -10,7 +10,7 @@ A simple and powerful CLI tool to **convert images** to different formats like W
 - 🎯 Format support: `webp`, `jpeg`, `png`, `avif`, `tiff`, `heif`
 - 🎚️ Control output quality (`-quality=80`)
 - 🔍 Filter files by extension (`-ext=jpg`)
-- 🗑️ Optionally delete original files (`del`)
+- 🗑️ delete original files (`-del`)
 
 ---
 

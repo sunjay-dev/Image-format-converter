@@ -1,6 +1,7 @@
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
+const logger = require('./logger.js');
 
 function convertFile(inputPath, outputPath, quality, format, del = false) {
   const extension = '.' + format;
@@ -12,19 +13,19 @@ function convertFile(inputPath, outputPath, quality, format, del = false) {
   sharp(inputPath).
     toFormat(format, option)
     .toFile(outputFile).then(() => {
-      console.log(`[OK] Converted: ${inputPath}`);
+      logger.log(`Converted: ${inputPath}`);
       if (del) {
         fs.unlink(inputPath, (err) => {
           if (err) {
-            console.error(`[ERROR] Failed to delete original file: ${inputPath}`, err.message);
+            logger.error(`Failed to delete original file: ${inputPath}`, err.message);
           } else {
-            console.log(`[DELETE] Deleted original file: ${inputPath}`);
+            logger.log(`Deleted original file: ${inputPath}`);
           }
         })
       }
     })
     .catch(err => {
-      console.error("[ERROR] Conversion failed:", err.message);
+      logger.error("Conversion failed:", err.message);
     });
 }
 

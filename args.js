@@ -1,3 +1,5 @@
+const logger  = require("./logger.js");
+
 function processArgs() {
     const args = process.argv.slice(2);
 
@@ -21,7 +23,7 @@ function processArgs() {
             supportedExtensions = ['.' + supportedExtValue]
         }
         else {
-            console.error(`[ERROR] Invalid extension. Use: ${validExts.join(', ')}`);
+            logger.error(`Invalid extension. Use: ${validExts.join(', ')}`);
             process.exit(1);
         }
     }
@@ -34,7 +36,7 @@ function processArgs() {
             quality = qualityValue;
         }
         else {
-            console.error("[ERROR] Invalid quality value. Use 0–100.");
+            logger.error("Invalid quality value. Use 0–100.");
             process.exit(1);
         }
     }
@@ -49,11 +51,11 @@ function processArgs() {
             format = formatValue;
         }
         else if (formatValue === 'jpg') {
-            console.error('[ERROR] Sorry JPG not supported. Try JPEG instead.');
+            logger.error('Sorry JPG not supported. Try JPEG instead.');
             process.exit(1);
         }
         else {
-            console.error(`[ERROR] Invalid format. Choose from: ${validFormats.join(', ')}`);
+            logger.error(`Invalid format. Choose from: ${validFormats.join(', ')}`);
             process.exit(1);
         }
     }
@@ -68,7 +70,7 @@ function processArgs() {
 
 
 const showHelp = () => {
-    console.log(`
+    logger.log(`
 [INFO] Imgify - Image Converter CLI
 
 Usage:
