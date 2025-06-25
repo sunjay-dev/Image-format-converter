@@ -10,13 +10,14 @@ A simple and powerful CLI tool to **convert images** to different formats like W
 - 🎯 Format support: `webp`, `jpeg`, `png`, `avif`, `tiff`, `heif`
 - 🎚️ Control output quality (`-quality=80`)
 - 🔍 Filter files by extension (`-ext=jpg`)
-- 🗑️ delete original files (`-del`)
+- 🗑️ Delete original files after conversion (`-del`)
+* 🧪 **Dry run** support — see what will be converted (`-dry`)
 
 ---
 
-## 📦 Installation (Dev/Global Use)
+## 📦 Installation (Global Use)
 
-### 🔧 Step-by-step:
+### 🔧 Step-by-step (run **cmd as Administrator**):
 
 1. Clone the repo:
 ```bash
@@ -35,7 +36,7 @@ cd Image-Format-Converter
 npm install
 ```
 
-4. Link the tool globally (run **cmd as Administrator**):
+4. Link the tool globally:
 
 ```bash
 npm link
@@ -77,6 +78,12 @@ imgify -all -ext=png
 imgify -all -del
 ```
 
+### ➤ Preview conversion (dry run)
+
+```bash
+imgify -all --dry
+```
+
 ---
 
 ## 🔧 Options
@@ -88,6 +95,7 @@ imgify -all -del
 | `-format=webp` | Output format: `webp`, `jpeg`, `png`, `avif`, `tiff`, `heif` | `webp`  |
 | `-ext=png`     | Only convert files with the specified extension              | all     |
 | `-del`         | Delete the original file(s) after conversion                 | off     |
+| `-dry`         | Simulate conversion (log what would be converted)            | off     |
 | `-help`        | Show usage instructions                                      | —       |
 
 ---
@@ -98,6 +106,7 @@ imgify -all -del
 imgify input.jpg -format=avif -quality=70
 imgify -all -ext=jpeg -format=png -del
 imgify input.png output.avif -quality=90
+imgify -all --dry
 ```
 
 ---

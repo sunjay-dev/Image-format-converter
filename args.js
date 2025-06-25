@@ -7,6 +7,8 @@ function processArgs() {
     let quality = 80;
     let format = 'webp';
     let del = args.includes('-del') || args.includes('--delete');
+    let dry = args.includes('-dry') || args.includes('--dry');
+
     let supportedExtensions = ['.jpg', '.png', '.jpeg', '.avif', '.tiff', '.heif'];
 
     if (args.includes('-help') || args.includes('--help')) {
@@ -69,7 +71,7 @@ function processArgs() {
     const inputPath = positional[0];
     const outputPath = positional[1];
 
-    return { inputPath, outputPath, format, quality, isAll, del, supportedExtensions }
+    return { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, dry }
 }
 
 

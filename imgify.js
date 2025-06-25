@@ -5,7 +5,7 @@ const path = require('path');
 const processArgs = require('./args.js');
 const logger = require('./logger.js')
 
-let { inputPath, outputPath, format, quality, isAll, del, supportedExtensions }= processArgs(process.argv)
+let { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, dry } = processArgs(process.argv)
 
 if (isAll) {
   const files = fs.readdirSync(process.cwd());
@@ -19,7 +19,10 @@ if (isAll) {
     process.exit(0);
   }
   imageFiles.forEach(file => {
-    convertFile(file, null,quality, format, del);
+    if (dry) {
+      logger.log(`[DRY] ${file} → ${format}`);
+    } else
+      convertFile(file, null, quality, format, del);
   });
 }
 else {
@@ -31,5 +34,8 @@ else {
     process.exit(1);
   }
 
-  convertFile(inputPath, outputPath, quality, format, del);
+  if (dry) {
+    logger.log(`[DRY] ${file} → ${format}`);
+  } else
+    convertFile(inputPath, outputPath, quality, format, del);
 }
