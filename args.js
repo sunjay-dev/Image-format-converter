@@ -3,7 +3,7 @@ const logger  = require("./logger.js");
 function processArgs() {
     const args = process.argv.slice(2);
 
-    const isAll = args.includes('-all');
+    const isAll = args.includes('-all') || args.includes('-a');
     let quality = 80;
     let format = 'webp';
     let del = args.includes('-del') || args.includes('--delete');
@@ -11,12 +11,12 @@ function processArgs() {
 
     let supportedExtensions = ['.jpg', '.png', '.jpeg', '.avif', '.tiff', '.heif'];
 
-    if (args.includes('-help') || args.includes('--help')) {
+    if (args.includes('-help') || args.includes('--help') || args.includes('-h')) {
         showHelp();
         process.exit(0);
     }
 
-    let supportedExtArg = args.find(arg => arg.startsWith('-ext'));
+    let supportedExtArg = args.find(arg => arg.startsWith('-ext') || arg.startsWith('-e'));
     if (supportedExtArg) {
         const supportedExtValue = supportedExtArg.split('=')[1];
         const validExts = ['jpg', 'jpeg', 'png', 'webp'];
@@ -31,7 +31,7 @@ function processArgs() {
     }
 
 
-    let qualityArg = args.find(arg => arg.startsWith('-quality'));
+    let qualityArg = args.find(arg => arg.startsWith('--quality=') || arg.startsWith('-q='));
     if (qualityArg) {
         const qualityValue = parseInt(qualityArg.split('=')[1]);
         if (!isNaN(qualityValue) && qualityValue >= 0 && qualityValue <= 100) {
@@ -43,7 +43,7 @@ function processArgs() {
         }
     }
 
-    let formatArg = args.find(arg => arg.startsWith('-format'));
+    let formatArg = args.find(arg => arg.startsWith('-format=') || arg.startsWith('-f='));
     if (formatArg) {
         let formatValue = formatArg.split('=')[1].toLowerCase();
 

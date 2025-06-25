@@ -9,7 +9,7 @@ function formatSize(bytes) {
 
 async function convertFile(inputPath, outputPath, quality, format, del = false) {
   const extension = '.' + format;
-  
+
   const originalSize = fs.statSync(inputPath).size;
 
   const outputFile = outputPath || inputPath.replace(path.extname(inputPath), extension);
@@ -20,7 +20,13 @@ async function convertFile(inputPath, outputPath, quality, format, del = false) 
     toFormat(format, option)
     .toFile(outputFile).then(() => {
       const newSize = fs.statSync(outputFile).size;
-      logger.log(`Converted: ${inputPath} (${formatSize(originalSize)} → ${formatSize(newSize)})`);
+
+      const change = (newSize - originalSize) / originalSize * 100
+      const percent = Math.abs(Math.round(change));
+      const direction = change > 0 ? 'increase' : 'reduction';
+      logger.log(`Converted: ${inputPath} (${formatSize(originalSize)} → ${formatSize(newSize)}) (${percent}% ${direction})`);
+
+
       if (del) {
         fs.unlinkSync(inputPath, (err) => {
           if (err) {
