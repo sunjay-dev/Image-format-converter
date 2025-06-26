@@ -7,7 +7,7 @@ A simple and powerful CLI tool to **convert images** to different formats like W
 ## 🚀 Features
 
 - ✅ Convert a single image or **batch convert all** in a folder
-- 🎯 Format support: `webp`, `jpeg`, `png`, `avif`, `tiff`, `heif`
+- 🎯 Format support: `webp`, `jpeg`, `png`, `avif`, `tiff`
 - 🎚️ Control output quality (`-quality=80`)
 - 🔍 Filter files by extension (`-ext=jpg`)
 - 🗑️ Delete original files after conversion (`-del`)
@@ -92,7 +92,7 @@ imgify -all --dry
 | -------------- | ------------------------------------------------------------ | ------- |
 | `-all`         | Convert all `.jpg`, `.jpeg`, `.png` in current folder        | —       |
 | `-quality=80`  | Output quality (0–100, lossy formats only)                   | `80`    |
-| `-format=webp` | Output format: `webp`, `jpeg`, `png`, `avif`, `tiff`, `heif` | `webp`  |
+| `-format=webp` | Output format: `webp`, `jpeg`, `png`, `avif`, `tiff`         | `webp`  |
 | `-ext=png`     | Only convert files with the specified extension              | all     |
 | `-del`         | Delete the original file(s) after conversion                 | off     |
 | `-dry`         | Simulate conversion (log what would be converted)            | off     |
@@ -113,7 +113,7 @@ imgify -all --dry
 
 ## 📂 Supported Formats
 
-* **Input**: `.jpg`, `.jpeg`, `.png`, `.webp`, `.tiff`, `.gif`, `.avif`, `.heif`
-* **Output**: `webp`, `jpeg`, `png`, `avif`, `tiff`, `heif`
+* **Input**: `.jpg`, `.jpeg`, `.png`, `.webp`, `.tiff`, `.gif`, `.avif`
+* **Output**: `webp`, `jpeg`, `png`, `avif`, `tiff`
 
 > Internally uses [Sharp](https://www.npmjs.com/package/sharp) for fast, high-quality conversions.

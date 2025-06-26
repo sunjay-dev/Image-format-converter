@@ -23,6 +23,10 @@ const logger = {
         console.error("\x1b[31m[ERROR]\x1b[0m", ...messages);
         writeToFile('ERROR', ...messages);
     },
+    delete: (...messages) => {
+        console.log("\x1b[31m[DELETE]\x1b[0m", ...messages);
+        writeToFile('DELETE', ...messages);
+    },
     warn: (...messages) => {
         console.warn("\x1b[33m[WARN]\x1b[0m", ...messages);
         writeToFile('WARN', ...messages);

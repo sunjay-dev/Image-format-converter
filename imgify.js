@@ -9,7 +9,7 @@ const deleteFile = require('./delete.js');
 const filesToDelete = [];
 
 async function start() {
-  let { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, dry } = processArgs(process.argv)
+  let { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, preview } = processArgs(process.argv)
 
   if (isAll) {
     const files = fs.readdirSync(process.cwd());
@@ -23,8 +23,8 @@ async function start() {
       process.exit(0);
     }
     for (const file of imageFiles) {
-      if (dry)
-        logger.log(`[DRY] ${file} → ${format}`);
+      if (preview)
+        logger.log(`[PREVIEW] ${del? '[DELETE]': ''} ${file} → ${format} [Quality = ${quality}]`);
       else {
         const success = await convertFile(file, null, quality, format);
         if (success) filesToDelete.push(file);
@@ -40,8 +40,8 @@ async function start() {
       process.exit(1);
     }
 
-    if (dry)
-      logger.log(`[DRY] ${file} → ${format}`);
+    if (preview)
+      logger.log(`[PREVIEW] ${del? '[DELETE]': ''} ${inputPath} → ${outputPath || format} [Quality = ${quality}]`);
     else {
       const success = await convertFile(inputPath, outputPath, quality, format);
       if (success) filesToDelete.push(inputPath);

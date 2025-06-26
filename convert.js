@@ -23,6 +23,7 @@ async function convertFile(inputPath, outputPath, quality, format) {
   const outputFile = outputPath || inputPath.replace(path.extname(inputPath), extension);
 
   let option = format === 'png' ? { compressionLevel: 9 } : { quality };
+  
   try {
     await sharp(inputPath).
       toFormat(format, option)

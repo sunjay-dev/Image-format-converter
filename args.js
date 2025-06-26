@@ -6,48 +6,22 @@ function processArgs() {
     const isAll = args.includes('-all') || args.includes('-a');
     let quality = 80;
     let format = 'webp';
-    let del = args.includes('-del') || args.includes('--delete');
-    let dry = args.includes('-dry') || args.includes('--dry');
+    let del = args.includes('-del') || args.includes('-delete');
+    let preview = args.includes('-p') || args.includes('-preview') || args.includes('-pre');
 
-    let supportedExtensions = ['.jpg', '.png', '.jpeg', '.avif', '.tiff', '.heif'];
+    let supportedExtensions = ['.jpg', '.png', '.jpeg', '.avif', '.tiff'];
 
-    if (args.includes('-help') || args.includes('--help') || args.includes('-h')) {
+    if (args.includes('-help') ||  args.includes('-h')) {
         showHelp();
         process.exit(0);
     }
 
-    let supportedExtArg = args.find(arg => arg.startsWith('-ext') || arg.startsWith('-e'));
-    if (supportedExtArg) {
-        const supportedExtValue = supportedExtArg.split('=')[1];
-        const validExts = ['jpg', 'jpeg', 'png', 'webp'];
-
-        if (validExts.includes(supportedExtValue)) {
-            supportedExtensions = ['.' + supportedExtValue]
-        }
-        else {
-            logger.error(`Invalid extension. Use: ${validExts.join(', ')}`);
-            process.exit(1);
-        }
-    }
-
-
-    let qualityArg = args.find(arg => arg.startsWith('--quality=') || arg.startsWith('-q='));
-    if (qualityArg) {
-        const qualityValue = parseInt(qualityArg.split('=')[1]);
-        if (!isNaN(qualityValue) && qualityValue >= 0 && qualityValue <= 100) {
-            quality = qualityValue;
-        }
-        else {
-            logger.error("Invalid quality value. Use 0–100.");
-            process.exit(1);
-        }
-    }
-
+    //output extensions
     let formatArg = args.find(arg => arg.startsWith('-format=') || arg.startsWith('-f='));
     if (formatArg) {
         let formatValue = formatArg.split('=')[1].toLowerCase();
 
-        const validFormats = ['webp', 'avif', 'jpeg', 'png', 'tiff', 'heif'];
+        const validFormats = ['webp', 'avif', 'jpeg', 'png', 'tiff'];
 
         if (validFormats.includes(formatValue)) {
             format = formatValue;
@@ -67,11 +41,39 @@ function processArgs() {
         }
     }
 
+    // input extensions
+    let supportedExtArg = args.find(arg => arg.startsWith('-ext') || arg.startsWith('-e'));
+    if (supportedExtArg) {
+        const supportedExtValue = supportedExtArg.split('=')[1];
+        const validExts = ['jpg', 'jpeg', 'png', 'webp', 'avif'];
+
+        if (validExts.includes(supportedExtValue)) {
+            supportedExtensions = ['.' + supportedExtValue]
+        }
+        else {
+            logger.error(`Invalid extension. Use: ${validExts.join(', ')}`);
+            process.exit(1);
+        }
+    }
+
+
+    let qualityArg = args.find(arg => arg.startsWith('-quality=') || arg.startsWith('-q='));
+    if (qualityArg) {
+        const qualityValue = parseInt(qualityArg.split('=')[1]);
+        if (!isNaN(qualityValue) && qualityValue >= 0 && qualityValue <= 100) {
+            quality = qualityValue;
+        }
+        else {
+            logger.error("Invalid quality value. Use 0–100.");
+            process.exit(1);
+        }
+    }
+
     const positional = args.filter(arg => !arg.startsWith('-'));
     const inputPath = positional[0];
     const outputPath = positional[1];
 
-    return { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, dry }
+    return { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, preview }
 }
 
 
@@ -88,9 +90,10 @@ Usage:
 Options:
   -all             Convert all .jpg/.jpeg/.png in the current folder
   -quality=80      Set output quality (0–100). Default: 80
-  -format=webp     Output format (webp, jpeg, png, avif, tiff, heif)
+  -format=webp     Output format (webp, jpeg, png, avif, tiff)
   -ext=png         Convert only png files to desired format 
-  -help, --help    Show this help message
+  -help            Show this help message
+  -preview         show what will change 
 
 Examples:
   imgify photo.jpg output.webp
