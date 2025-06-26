@@ -35,6 +35,10 @@ function processArgs() {
             logger.error('Sorry JPG not supported. Try JPEG instead.');
             process.exit(1);
         }
+        else if (formatValue === 'gif') {
+            logger.error('Sorry, GIF creation is not supported right now, but it can be converted to PNG/JPEG/WEBP/AVIF/TIFF.');
+            process.exit(1);
+        }
         else {
             logger.error(`Invalid format. Choose from: ${validFormats.join(', ')}`);
             process.exit(1);
@@ -45,7 +49,7 @@ function processArgs() {
     let supportedExtArg = args.find(arg => arg.startsWith('-ext') || arg.startsWith('-e'));
     if (supportedExtArg) {
         const supportedExtValue = supportedExtArg.split('=')[1];
-        const validExts = ['jpg', 'jpeg', 'png', 'webp', 'avif'];
+        const validExts = ['jpg', 'jpeg', 'png', 'webp', 'avif', 'tiff', 'gif'];
 
         if (validExts.includes(supportedExtValue)) {
             supportedExtensions = ['.' + supportedExtValue]
@@ -94,6 +98,11 @@ Options:
   -ext=png         Convert only png files to desired format 
   -help            Show this help message
   -preview         show what will change 
+
+Supported Formats:
+
+Input: .jpg, .jpeg, .png, .webp, .tiff, .gif, .avif
+Output: webp, jpeg, png, avif, tiff
 
 Examples:
   imgify photo.jpg output.webp

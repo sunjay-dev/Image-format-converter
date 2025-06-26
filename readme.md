@@ -7,11 +7,11 @@ A simple and powerful CLI tool to **convert images** to different formats like W
 ## 🚀 Features
 
 - ✅ Convert a single image or **batch convert all** in a folder
-- 🎯 Format support: `webp`, `jpeg`, `png`, `avif`, `tiff`
+- 🎯 Format support: `webp`, `jpeg`, `png`, `avif`, `tiff`, `gif`
 - 🎚️ Control output quality (`-quality=80`)
 - 🔍 Filter files by extension (`-ext=jpg`)
 - 🗑️ Delete original files after conversion (`-del`)
-* 🧪 **Dry run** support — see what will be converted (`-dry`)
+* 🧪 **preview run** support — see what will be converted (`-preview`)
 
 ---
 
@@ -78,10 +78,10 @@ imgify -all -ext=png
 imgify -all -del
 ```
 
-### ➤ Preview conversion (dry run)
+### ➤ Preview conversion (preview run)
 
 ```bash
-imgify -all --dry
+imgify -all --preview
 ```
 
 ---
@@ -95,7 +95,7 @@ imgify -all --dry
 | `-format=webp` | Output format: `webp`, `jpeg`, `png`, `avif`, `tiff`         | `webp`  |
 | `-ext=png`     | Only convert files with the specified extension              | all     |
 | `-del`         | Delete the original file(s) after conversion                 | off     |
-| `-dry`         | Simulate conversion (log what would be converted)            | off     |
+| `-preview`     | Simulate conversion (log what would be converted)            | off     |
 | `-help`        | Show usage instructions                                      | —       |
 
 ---
@@ -106,7 +106,7 @@ imgify -all --dry
 imgify input.jpg -format=avif -quality=70
 imgify -all -ext=jpeg -format=png -del
 imgify input.png output.avif -quality=90
-imgify -all --dry
+imgify -all -preview
 ```
 
 ---
