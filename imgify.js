@@ -24,7 +24,7 @@ async function start() {
     }
     for (const file of imageFiles) {
       if (preview)
-        logger.log(`[PREVIEW] ${del? '[DELETE]': ''} ${file} → ${format} [Quality = ${quality}]`);
+        logger.preview(`${del? '[DELETE]': ''} ${file} → ${format} [Quality = ${quality}]`);
       else {
         const success = await convertFile(file, null, quality, format);
         if (success) filesToDelete.push(file);
@@ -41,7 +41,7 @@ async function start() {
     }
 
     if (preview)
-      logger.log(`[PREVIEW] ${del? '[DELETE]': ''} ${inputPath} → ${outputPath || format} [Quality = ${quality}]`);
+      logger.preview(`${del? '[DELETE]': ''} ${inputPath} → ${outputPath || format} [Quality = ${quality}]`);
     else {
       const success = await convertFile(inputPath, outputPath, quality, format);
       if (success) filesToDelete.push(inputPath);
@@ -53,5 +53,6 @@ async function start() {
   }
   console.log(`\n\nLogs are saved at ${logger.path}`);
   logger.space();
+  console.log("Time required : " + process.uptime().toFixed(2) + " sec")
 }
 start();

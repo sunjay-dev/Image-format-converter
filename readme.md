@@ -1,4 +1,7 @@
-# 🖼️ Image Format Converter
+# 🖼️ Imgify - Image Format Converter
+
+<img src="https://raw.githubusercontent.com/sunjay-dev/Image-format-converter/refs/heads/main/assets/preview.webp" alt="SolarVerse Preview" width="100%" />
+
 
 A simple and powerful CLI tool to **convert images** to different formats like WebP, JPEG, PNG, AVIF, and more — powered by [Sharp](https://github.com/lovell/sharp).
 

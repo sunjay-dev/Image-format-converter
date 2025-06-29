@@ -30,7 +30,7 @@ async function convertFile(inputPath, outputPath, quality, format) {
       .toFile(outputFile)
     
     const newSize = fs.statSync(outputFile).size;
-    logger.log(`Converted: ${inputPath}  → ${format} (${formatSize(originalSize)} → ${formatSize(newSize)}) (${formatPercentage(newSize, originalSize)})`);
+    logger.success(`Converted: ${inputPath}  → ${format} (${formatSize(originalSize)} → ${formatSize(newSize)}) (${formatPercentage(newSize, originalSize)})`);
     return true;
   } catch (err) {
     logger.error("Conversion failed:", err.message);

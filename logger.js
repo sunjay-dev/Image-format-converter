@@ -19,6 +19,10 @@ const logger = {
         console.log("\x1b[32m[LOG]\x1b[0m", ...messages)
         writeToFile('LOG', ...messages)
     },
+    success: (...messages) => {
+        console.log("\x1b[32m[SUCCESS]\x1b[0m", ...messages)
+        writeToFile('SUCCESS', ...messages)
+    },
     error: (...messages) => {
         console.error("\x1b[31m[ERROR]\x1b[0m", ...messages);
         writeToFile('ERROR', ...messages);
@@ -30,6 +34,10 @@ const logger = {
     warn: (...messages) => {
         console.warn("\x1b[33m[WARN]\x1b[0m", ...messages);
         writeToFile('WARN', ...messages);
+    },
+    preview: (...messages) => {
+        console.info("\x1b[33m[PREVIEW]\x1b[0m", ...messages);
+        writeToFile('PREVIEW', ...messages);
     },
     info: (...messages) => {
         console.info("\x1b[34m[INFO]\x1b[0m", ...messages);
