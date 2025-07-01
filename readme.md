@@ -8,7 +8,6 @@ A simple and powerful CLI tool to **convert images** to different formats like W
 ---
 
 ## 🚀 Features
-
 - ✅ Convert a single image or **batch convert all** in a folder
 - 🎯 Format support: `webp`, `jpeg`, `png`, `avif`, `tiff`, `gif`
 - 🎚️ Control output quality (`-quality=80`)
@@ -18,14 +17,35 @@ A simple and powerful CLI tool to **convert images** to different formats like W
 
 ---
 
-## 📦 Installation (Global Use)
 
-### 🔧 Step-by-step (run **cmd as Administrator**):
 
-1. Clone the repo:
+### 📦 Installation & Usage
+
+### 🚀 One-liner (No install needed):
+
+```bash
+npx imgify-cli input.png output.jpeg
+```
+
+You can use all options like:
+
+```bash
+npx imgify-cli -all -ext=png -f=webp -quality=80
+```
+
+This is the **recommended way** to use `imgify-cli` quickly and without setup.
+
+---
+
+### 💻 Local Development or Manual Global Setup (For Offline Use or Contribution)
+
+#### 🔧 Manual setup (if you want to contribute or link locally):
+
+1. Clone the repo: (Open Terminal as **Administrator**)
+
 ```bash
 git clone https://github.com/sunjay-dev/Image-Format-Converter
-````
+```
 
 2. Enter the directory:
 
@@ -39,13 +59,13 @@ cd Image-Format-Converter
 npm install
 ```
 
-4. Link the tool globally:
+4. Link globally:
 
 ```bash
 npm link
 ```
 
-> ✅ After this, you can run `imgify` from any folder in your terminal.
+> Now you can run `imgify` anywhere.
 
 ---
 
@@ -54,7 +74,7 @@ npm link
 ### ➤ Convert a single image
 
 ```bash
-imgify input.jpg
+imgify input.jpg output.png
 ```
 
 ### ➤ Convert with a custom output
