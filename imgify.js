@@ -1,17 +1,16 @@
 #!/usr/bin/env node
-const convertFile = require('./convert.js');
 const fs = require('fs');
 const path = require('path');
-const processArgs = require('./args.js');
-const logger = require('./logger.js');
-const deleteFile = require('./delete.js');
-
-const filesToDelete = [];
+const {logger, deleteFile, recursion, processArgs, convertFile} = require('./helpers');
+var filesToDelete = [];
 
 async function start() {
-  let { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, preview } = processArgs(process.argv)
+  let { inputPath, outputPath, format, quality, isAll, isSubDir, del, supportedExtensions, preview } = processArgs(process.argv)
 
-  if (isAll) {
+  if (isSubDir)
+    filesToDelete = await recursion('./', supportedExtensions, preview, del, format, quality);
+
+  else if (isAll) {
     const files = fs.readdirSync(process.cwd());
 
     const imageFiles = files.filter(file =>
@@ -24,24 +23,25 @@ async function start() {
     }
     for (const file of imageFiles) {
       if (preview)
-        logger.preview(`${del? '[DELETE]': ''} ${file} → ${format} [Quality = ${quality}]`);
+        logger.preview(`${del ? '[DELETE]' : ''} ${file} → ${format} [Quality = ${quality}]`);
       else {
         const success = await convertFile(file, null, quality, format);
         if (success) filesToDelete.push(file);
       }
     }
   }
+  
   else {
     if (!inputPath) {
       logger.error("Please provide an input image path.");
       logger.error("Usage:");
-      logger.error("  webpify input.jpg [output.webp]");
-      logger.error("  webpify --all   # Convert all .jpg/.png/.jpeg images in this folder");
+      logger.error("  imgify input.jpg [output.webp]");
+      logger.error("  imgify --all   # Convert all .jpg/.png/.jpeg images in this folder");
       process.exit(1);
     }
 
     if (preview)
-      logger.preview(`${del? '[DELETE]': ''} ${inputPath} → ${outputPath || format} [Quality = ${quality}]`);
+      logger.preview(`${del ? '[DELETE]' : ''} ${inputPath} → ${outputPath || format} [Quality = ${quality}]`);
     else {
       const success = await convertFile(inputPath, outputPath, quality, format);
       if (success) filesToDelete.push(inputPath);

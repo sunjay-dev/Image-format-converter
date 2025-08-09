@@ -1,17 +1,18 @@
-const logger  = require("./logger.js");
+const logger = require("./logger.js");
 
 function processArgs() {
     const args = process.argv.slice(2);
 
+    const isSubDir = args.includes('-subdir') || args.includes('-sd') || args.includes('-s');
     const isAll = args.includes('-all') || args.includes('-a');
     let quality = 80;
     let format = 'webp';
     let del = args.includes('-del') || args.includes('-delete');
     let preview = args.includes('-p') || args.includes('-preview') || args.includes('-pre');
 
-    let supportedExtensions = ['.jpg', '.png', '.jpeg', '.avif', '.tiff'];
+    let supportedExtensions = ['.jpg', '.png', '.jpeg', '.avif', '.tiff', '.gif'];
 
-    if (args.includes('-help') ||  args.includes('-h')) {
+    if (args.includes('-help') || args.includes('-h')) {
         showHelp();
         process.exit(0);
     }
@@ -25,8 +26,8 @@ function processArgs() {
 
         if (validFormats.includes(formatValue)) {
             format = formatValue;
-            
-            if(formatValue !== 'webp' && !supportedExtensions.includes('.webp')){
+
+            if (formatValue !== 'webp' && !supportedExtensions.includes('.webp')) {
                 supportedExtensions.push('.webp');
                 supportedExtensions = supportedExtensions.filter(ext => ext !== `.${formatValue}`);
             }
@@ -77,37 +78,42 @@ function processArgs() {
     const inputPath = positional[0];
     const outputPath = positional[1];
 
-    return { inputPath, outputPath, format, quality, isAll, del, supportedExtensions, preview }
+    return { inputPath, outputPath, format, quality, isAll, isSubDir, del, supportedExtensions, preview }
 }
 
 
 
 const showHelp = () => {
-    logger.log(`
-[INFO] Imgify - Image Converter CLI
+    console.warn("\x1b[33m", "[INFO] Imgify - Image Converter CLI", "\x1b[0m")
+  console.log("\x1b[36m",`
+    Usage:
+        imgify input.jpg [output.webp]
+        imgify -all [-format=webp] [-quality=80]
+        imgify -help
 
-Usage:
-  imgify input.jpg [output.webp]
-  imgify -all [-format=webp] [-quality=80]
-  imgify -help
+    Options:`, "\x1b[0m");
 
-Options:
-  -all             Convert all .jpg/.jpeg/.png in the current folder
-  -quality=80      Set output quality (0–100). Default: 80
-  -format=webp     Output format (webp, jpeg, png, avif, tiff)
-  -ext=png         Convert only png files to desired format 
-  -help            Show this help message
-  -preview         show what will change 
+  console.table([
+    { Option: '-subdir',       Description: 'Convert all .jpg/.jpeg/.png in child folders too' },
+    { Option: '-all',          Description: 'Convert all .jpg/.jpeg/.png in the current folder' },
+    { Option: '-quality=80',   Description: 'Set output quality (0–100). Default: 80' },
+    { Option: '-format=webp',  Description: 'Output format (webp, jpeg, png, avif, tiff)' },
+    { Option: '-ext=png',      Description: 'Convert only PNG files to desired format' },
+    { Option: '-help',         Description: 'Show this help message' },
+    { Option: '-preview',      Description: 'Show what will change without making changes' }
+  ]);
 
-Supported Formats:
+  console.log("\x1b[36m",`
+    Supported Formats:
+        Input: .jpg, .jpeg, .png, .webp, .tiff, .gif, .avif
+        Output: webp, jpeg, png, avif, tiff
 
-Input: .jpg, .jpeg, .png, .webp, .tiff, .gif, .avif
-Output: webp, jpeg, png, avif, tiff
-
-Examples:
-  imgify photo.jpg output.webp
-  imgify -all -quality=70 -format=jpeg
-`);
+    Examples:
+        imgify photo.jpg output.webp
+        imgify -all -quality=70 -format=jpeg
+        imgify -s -f=webp -d -e=png
+`, "\x1b[0m");
 };
+
 
 module.exports = processArgs;

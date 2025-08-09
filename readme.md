@@ -5,6 +5,10 @@
 
 A simple and powerful CLI tool to **convert images** to different formats like WebP, JPEG, PNG, AVIF, and more — powered by [Sharp](https://github.com/lovell/sharp).
 
+```bash
+npm i -g imgify-cli 
+```
+
 ---
 
 ## 🚀 Features
@@ -21,23 +25,23 @@ A simple and powerful CLI tool to **convert images** to different formats like W
 
 ### 📦 Installation & Usage
 
-### 🚀 One-liner (No install needed):
+### 🚀 One-liner (Run CMD on **Administrator**, If throw errors):
 
 ```bash
-npx imgify-cli input.png output.jpeg
+npm i -g imgify-cli 
 ```
 
-You can use all options like:
+You can use all options like (in any folder):
 
 ```bash
-npx imgify-cli -all -ext=png -f=webp -quality=80
+imgify -all -ext=png -f=webp -quality=80
 ```
 
 This is the **recommended way** to use `imgify-cli` quickly and without setup.
 
 ---
 
-### 💻 Local Development or Manual Global Setup (For Offline Use or Contribution)
+### 💻 Local Development or Manual Global Setup (For Contribution)
 
 #### 🔧 Manual setup (if you want to contribute or link locally):
 
@@ -88,6 +92,11 @@ imgify input.jpg output.webp
 ```bash
 imgify -all
 ```
+### ➤ Convert all images in the sub folder too
+
+```bash
+imgify -s 
+```
 
 ### ➤ Convert only `.png` images
 
@@ -113,13 +122,14 @@ imgify -all --preview
 
 | Flag           | Description                                                  | Default |
 | -------------- | ------------------------------------------------------------ | ------- |
-| `-all`         | Convert all `.jpg`, `.jpeg`, `.png` in current folder        | —       |
-| `-quality=80`  | Output quality (0–100, lossy formats only)                   | `80`    |
-| `-format=webp` | Output format: `webp`, `jpeg`, `png`, `avif`, `tiff`         | `webp`  |
-| `-ext=png`     | Only convert files with the specified extension              | all     |
-| `-del`         | Delete the original file(s) after conversion                 | off     |
-| `-preview`     | Simulate conversion (log what would be converted)            | off     |
-| `-help`        | Show usage instructions                                      | —       |
+| `-all / -a`    | Convert all `.jpg`, `.jpeg`, `.png` in current folder        | —       |
+| `-quality=80 / -q`| Output quality (0–100, lossy formats only)                   | `80`    |
+| `-format=webp / -f`| Output format: `webp`, `jpeg`, `png`, `avif`, `tiff`         | `webp`  |
+| `-ext=png / -e`| Only convert files with the specified extension              | all     |
+| `-del / -d`    | Delete the original file(s) after conversion                 | off     |
+| `-preview / -p`| Simulate conversion (log what would be converted)            | off     |
+| `-help / -h`   | Show usage instructions                                      | —       |
+| `-subdir / -s` | Convert all `.jpg`, `.jpeg`, `.png` in sub folders too       | —       |
 
 ---
 
@@ -130,6 +140,7 @@ imgify input.jpg -format=avif -quality=70
 imgify -all -ext=jpeg -format=png -del
 imgify input.png output.avif -quality=90
 imgify -all -preview
+imgify -s -f=webp -d -e=png
 ```
 
 ---
