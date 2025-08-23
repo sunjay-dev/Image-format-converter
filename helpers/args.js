@@ -84,12 +84,12 @@ function processArgs() {
 
 
 const showHelp = () => {
-    console.warn("\x1b[33m", "[INFO] Imgify - Image Converter CLI", "\x1b[0m")
+    console.warn("\x1b[33m", "[INFO] imgify-cli - Image Converter CLI", "\x1b[0m")
   console.log("\x1b[36m",`
     Usage:
-        imgify input.jpg [output.webp]
-        imgify -all [-format=webp] [-quality=80]
-        imgify -help
+        imgify-cli input.jpg [output.webp]
+        imgify-cli -all [-format=webp] [-quality=80]
+        imgify-cli -help
 
     Options:`, "\x1b[0m");
 
@@ -109,9 +109,9 @@ const showHelp = () => {
         Output: webp, jpeg, png, avif, tiff
 
     Examples:
-        imgify photo.jpg output.webp
-        imgify -all -quality=70 -format=jpeg
-        imgify -s -f=webp -d -e=png
+        imgify-cli photo.jpg output.webp
+        imgify-cli -all -quality=70 -format=jpeg
+        imgify-cli -s -f=webp -d -e=png
 `, "\x1b[0m");
 };
 

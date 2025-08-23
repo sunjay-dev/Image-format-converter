@@ -35,8 +35,8 @@ async function start() {
     if (!inputPath) {
       logger.error("Please provide an input image path.");
       logger.error("Usage:");
-      logger.error("  imgify input.jpg [output.webp]");
-      logger.error("  imgify --all   # Convert all .jpg/.png/.jpeg images in this folder");
+      logger.error("  imgify-cli input.jpg [output.webp]");
+      logger.error("  imgify-cli --all   # Convert all .jpg/.png/.jpeg images in this folder");
       process.exit(1);
     }
 

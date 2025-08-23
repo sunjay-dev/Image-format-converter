@@ -1,4 +1,4 @@
-# 🖼️ Imgify - Image Format Converter
+# 🖼️ imgify-cli - Image Format Converter
 
 <img src="https://raw.githubusercontent.com/sunjay-dev/Image-format-converter/refs/heads/main/assets/preview.webp" alt="SolarVerse Preview" width="100%" />
 
@@ -34,7 +34,7 @@ npm i -g imgify-cli
 You can use all options like (in any folder):
 
 ```bash
-imgify -all -ext=png -f=webp -quality=80
+imgify-cli -all -ext=png -f=webp -quality=80
 ```
 
 This is the **recommended way** to use `imgify-cli` quickly and without setup.
@@ -69,7 +69,7 @@ npm install
 npm link
 ```
 
-> Now you can run `imgify` anywhere.
+> Now you can run `imgify-cli` anywhere.
 
 ---
 
@@ -78,42 +78,42 @@ npm link
 ### ➤ Convert a single image
 
 ```bash
-imgify input.jpg output.png
+imgify-cli input.jpg output.png
 ```
 
 ### ➤ Convert with a custom output
 
 ```bash
-imgify input.jpg output.webp
+imgify-cli input.jpg output.webp
 ```
 
 ### ➤ Convert all images in the current folder
 
 ```bash
-imgify -all
+imgify-cli -all
 ```
 ### ➤ Convert all images in the sub folder too
 
 ```bash
-imgify -s 
+imgify-cli -s 
 ```
 
 ### ➤ Convert only `.png` images
 
 ```bash
-imgify -all -ext=png
+imgify-cli -all -ext=png
 ```
 
 ### ➤ Convert and delete original files
 
 ```bash
-imgify -all -del
+imgify-cli -all -del
 ```
 
 ### ➤ Preview conversion (preview run)
 
 ```bash
-imgify -all --preview
+imgify-cli -all --preview
 ```
 
 ---
@@ -136,11 +136,11 @@ imgify -all --preview
 ## 🧪 Examples
 
 ```bash
-imgify input.jpg -format=avif -quality=70
-imgify -all -ext=jpeg -format=png -del
-imgify input.png output.avif -quality=90
-imgify -all -preview
-imgify -s -f=webp -d -e=png
+imgify-cli input.jpg -format=avif -quality=70
+imgify-cli -all -ext=jpeg -format=png -del
+imgify-cli input.png output.avif -quality=90
+imgify-cli -all -preview
+imgify-cli -s -f=webp -d -e=png
 ```
 
 ---
